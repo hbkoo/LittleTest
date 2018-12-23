@@ -24,28 +24,31 @@ For object detection, the two-stage approach (e.g., Faster R-CNN) has been achie
 
 
 RefineDet的两个模型：
-- ARM（anchor refinement module）
+- ARM（anchor refinement module）:
 主要是识别和删除negative anchors，用来减少分类器的搜索空间；并且粗略调整anchors的位置和大小，为后续的ODM模块提供更好的初始化回归。我看他的网络结构，应该类似于RPN网络，用来先提取候选框，不过在RPN中，只是输入单层特征，利用单层的特征产生proposals，而在该模型中，是利用了多层特征图，网络结构中可以看到用了4层，每层都会生成refined anchors box。
 
-- ODM（object detection module）
+- ODM（object detection module）:
 该模型主要采用ARM产生的refined anchors 作为输入，进一步改善回归和预测多类别标签。该网络与SSD极其类似，都是首先在多层特征图上进行预测，然后将这个结果进行融合，进行multi-class classification 和regression。不过不同的地方在于ODM中输入的anchors是了利用ARM得到的refined anchors，而在SSD是利用默认的anchors。
 
 
 
 RefineDet的三个核心组件：
-- TCB（transfer connection block）
+- TCB（transfer connection block）:
 用TCB将ARM中的特征图转换到ODM中，这样ODM就可以共享ARM的特征。其中TCB的另一个功能是整合高层次的特征图，融合到低层次中，这个过程就跟FPN网络模型一致，从上而下逐渐由高层次的特征图和对应层次的从下而上的低层次特征图进行融合，而高层次的特征图与低层次的特征图size不一致，所以首先将高层次的特征图进行deconvolution，将其扩大到一致，然后再以element-wise的方式对他们进行求和。其TCB的模块实现如图所示。
 
 ![TCB](image/tcb.png)
 
-- Two-Step Cascade Regression
+- Two-Step Cascade Regression :
 作者提出一个两步级联回归策略回归对象位置和大小。即先用ARM调整anchors的位置和大小，为ODM中回归提供更好的初始化。然后ODM利用ARM生成的refined anchors作为输入，进一步检测和回归。
 
-- Negative Anchor Filtering
+- Negative Anchor Filtering :
 在训练时，针对ARM中的anchor，如果negative confidence大于一个阈值θ（θ=0.99，经验值），则在ODM训练时就会舍弃它。
 
 
+### 损失
+损失函数主要包含ARM和ODM两方面：在ARM部分包含binary classification损失Lb和回归损失Lr；同理在ODM部分包含multi-class classification损失Lm和回归损失Lr。损失函数如下：
 
+![loss](image/refinedet_loss.jpg)
 
 
 
