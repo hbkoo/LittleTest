@@ -49,7 +49,12 @@ RefineDet的三个核心组件：
 损失函数主要包含ARM和ODM两方面：在ARM部分包含binary classification损失Lb和回归损失Lr；同理在ODM部分包含multi-class classification损失Lm和回归损失Lr。损失函数如下：
 
 ![loss](image/refinedet_loss.jpg)
+其中[li* ≥ 1]lr可以在计算回归损失时忽略negative anchor。
 
+# result
+
+在VOC下的检测结果如下图所示，表格中最后两行在算法名称后面多了+，表示采用multi scale test，因此效果会更优一些。
+![result](image/result_voc.jpg)
 
 
 
