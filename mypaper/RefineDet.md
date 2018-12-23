@@ -19,7 +19,7 @@ For object detection, the two-stage approach (e.g., Faster R-CNN) has been achie
 
 
 该网络的结构图如下图所示：
-![RefineDet](image/refineDet.png)
+![RefineDet](../refineDet.png)
 
 
 
