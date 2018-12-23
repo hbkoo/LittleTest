@@ -16,12 +16,21 @@ For object detection, the two-stage approach (e.g., Faster R-CNN) has been achie
 - 为确保有效性，设计了TCB来传输ARM的特征，来处理更具挑战性的任务，即预测ODM中准确的对象位置、大小和类别标签。
 - 实现了最新的state-of-the-art通用目标检测（PASCAL VOC 2007，PASCAL VOC 2012和MS COCO）
 
+
+
+该网络的结构图如下图所示：
+![RefineDet](refineDet.png)
+
+
+
 RefineDet的两个模型：
 - ARM（anchor refinement module）
 主要是识别和删除negative anchors，用来减少分类器的搜索空间；并且粗略调整anchors的位置和大小，为后续的ODM模块提供更好的初始化回归。我看他的网络结构，应该类似于RPN网络，用来先提取候选框，不过在RPN中，只是输入单层特征，利用单层的特征产生proposals，而在该模型中，是利用了多层特征图，网络结构中可以看到用了4层，每层都会生成refined anchors box。
 
 - ODM（object detection module）
 该模型主要采用ARM产生的refined anchors 作为输入，进一步改善回归和预测多类别标签。该网络与SSD极其类似，都是首先在多层特征图上进行预测，然后将这个结果进行融合，进行multi-class classification 和regression。不过不同的地方在于ODM中输入的anchors是了利用ARM得到的refined anchors，而在SSD是利用默认的anchors。
+
+
 
 RefineDet的三个核心组件：
 - TCB（transfer connection block）
