@@ -52,7 +52,7 @@ RFB主要有两个组成部分：
 使用的主干网络是在LSVRCCLS-LOC数据集上预训练的VGG16模型，主干为SSD网络。首先在SSD的conv4_3和conv7_fc在接预测层之前分别接RFB-s和RFB结构，主干中的高两层也是用RFB代替，其结构如图5所示。
 
 ## result
-![resultVOC](resultVOC.png)
+![resultVOC](image/resultVOC.png)
 上图的表一中是PASCAL VOC2007 test-set数据集上的测试结果，训练集基于2007和2012的trainval。RFB Net300在mAP和FPS方面效果都不错。
 
 ## 总结
