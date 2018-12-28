@@ -25,7 +25,7 @@ RFB网络在Pascal VOC和COCO数据集上实现了最好的效果，并且速度
 
 
 ## RFB结构
-[!RFBarchitecture](rfb.png)
+[!RFBarchitecture](image/rfb.jpg)
 
 RFB的结结构如图所示，RFB使用不同尺寸卷积核的卷积层构成多分支结构，然后使用空洞卷积（dilated convolution）来控制离心率，主要增加感受野，其中不同的rate表示不同dilated卷积层的参数，最后把不同的分支特征concat整合在一起。
 
@@ -34,7 +34,7 @@ RFB的结结构如图所示，RFB使用不同尺寸卷积核的卷积层构成�
 RFB主要有两个组成部分：
 - 不同尺寸卷积核的多分支卷积层 （Multi-branch convolution layer）
 - 后续的空洞池化或卷积层（Dilated pooling or convolution layer）
-[!component](component.png)
+[!component](image/component.jpg)
 
 **Multi-branch convolution layer：**
 首先每一个分支连接一个1×1的卷积层来降低特征图的通道数，之后会跟着一个n×n的卷积层，比如图4中，在1×1卷积层之后有三个分支：1×1、3×3、5×5的卷积。而图4中的RFB-s是RFB的另一种结构，RFB-s相比于RFB主要有两个改进，一方面用3×3卷积层代替5×5卷积层，另一方面用1×3和3×1卷积层代替3×3卷积层，主要目的应该是为了减少计算量。
@@ -43,7 +43,8 @@ RFB主要有两个组成部分：
 这个结构主要生成具有高分辨率的特征图，在保持相同数目的参数时捕获具有更多上下文区域的信息。（空洞卷积的概念）
 
 ##  RFB Net Detection Architecture
-[!Detection Architecture](DetectionArchitecture.png)
+[!Detection Architecture](image/Architecture.png)
+[!SSD](image/SSD.png)
 使用的主干网络是在LSVRCCLS-LOC数据集上预训练的VGG16模型，主干为SSD网络。首先在SSD的conv4_3和conv7_fc在接预测层之前分别接RFB-s和RFB结构，主干中的高两层也是用RFB代替，其结构如图5所示。
 
 
