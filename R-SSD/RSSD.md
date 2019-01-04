@@ -14,13 +14,12 @@ We propose an object detection method that improves the accuracy of the conventi
 ## Contribution
 
 - it creates a relationship between each scale of feature pyramid to prevent unnecessary detection such as multiple boxes in different scales for one object.
-
 它创造了在特征金字塔中的每个尺度之间的联系，从而避免了不必要的检测，比如在不同尺度的多个boxes检测同一个物体。
+
 - by efficiently increasing the number of feature maps of each layer in the feature pyramid, the accuracy is improved without much time overhead.
-
 通过高效增加了特征金字塔中的每层特征图的数量，提高了精度而且没有过多的时间消耗。
-- the number of feature maps for different layers are matched so that a single classifier can be used for different scales
 
+- the number of feature maps for different layers are matched so that a single classifier can be used for different scales
 不同层之间的特征图的数量是相同匹配的，因此在不同的特征尺度上可以使用单一的分类器网络。
 
 
