@@ -24,7 +24,7 @@ We propose an object detection method that improves the accuracy of the conventi
 
 
 ## Rainbow concatenation
-![SSD](image/SSD.png)
+![SSD](image/SSD.jpg)
 传统的SSD网络的全部模型如上图所示，它是在不同的尺度的特征图上单独进行预测，所以会有两个问题：
 - 不同层的feature map都是独立作为分类网络的输入，因此容易出现相同物体被不同大小的框同时检测出来。
 - 对小尺寸的物体检测效果比较差（虽然大部分的对象检测算法都会有这个问题）
@@ -34,14 +34,14 @@ We propose an object detection method that improves the accuracy of the conventi
 - 增加特征金字塔中每层的通道数。
 
 
-![RSSD](image/RSSD.png)
+![RSSD](image/RSSD.jpg)
 如上图所示，图a是将低层的特征图通过池化使之与高层的特征图size相同，然后连接到高层的特征图上。
 图b是将高层的特征图通过反卷积上采样操作使之与低层的特征图size相同，然后连接到低层的特征图上。
 而图c是我们的模型，同时使用低层向高层的池化操作和高层向低层的反卷积上采样操作，然后进行连接，所以最后得到的不同尺度的层的特征图的数目都是一致的，其中模型中的反卷积操作仅仅是执行batch normalization后的deconvolution。这样的话，一个特定大小的物体就会被在特征金字塔上特定尺度的层检测到，所以就会避免了传统的SSD中一个物体被不同的boxes框中。而同时，因为特征金字塔的每层的特征图数目相同，因此对于不同尺度的层的检测器网络的权重就可以实现共享。
 
 
 ## Result
-![result](image/result.png)
+![result](image/result.jpg)
 
 实验测试是在VOC2007+2012作为训练集，VOC2007作为测试集。由上图中的实验对比可以看出，仅仅在传统的SSD上使用pooling或者deconvolution操作，精度不仅没有上升，反而会降低，可能是因为在其它层之间共享相同的特征图可能会影响其他尺度层的损失而且不能充分关注与该尺度（the layers sharing the same feature maps with other layers can be affected by the loss of other scales and do not fully focus on the scale），而且因为增加了这些操作后检测速度也是大大降低。我们的RSSD模型精度都超过了传统的SSD的精度，但是检测速度稍微有些降低。
 
