@@ -44,10 +44,9 @@ We propose an object detection method that improves the accuracy of the conventi
 ![result](image/result.png)
 
 实验测试是在VOC2007+2012作为训练集，VOC2007作为测试集。由上图中的实验对比可以看出，仅仅在传统的SSD上使用pooling或者deconvolution操作，精度不仅没有上升，反而会降低，可能是因为在其它层之间共享相同的特征图可能会影响其他尺度层的损失而且不能充分关注与该尺度（the layers sharing the same feature maps with other layers can be affected by the loss of other scales and do not fully focus on the scale），而且因为增加了这些操作后检测速度也是大大降低。我们的RSSD模型精度都超过了传统的SSD的精度，但是检测速度稍微有些降低。
+
 当采样的数目比较小时，传统的SSD不能为一个尺度的层训练分类器，但是RSSD却避免了这个问题，因为它的分类器网络的权重是共享的，即是使用一个单一的分类器。
- conventional SSD cannot train the classifier for a
-scale with small number of samples. However, in R-SSD, this problem is avoided because
-the classifier network is shared.
+
 
 
 
