@@ -39,7 +39,10 @@ IF-Net only uses C3 and C4 as inputs because their semantic information and loca
 通道一：C4上采样S/16，anchor的步长由原来的16变成S。（S是期望的anchor步长）
 通道二：C3同样上采样到相同的anchor步长，由原来的8变成S，然后C3再经过inception结构增大感受野和语义信息，inception结构中包含不同尺寸的卷积核有助于适应对象形状的多样性。
 最后，通道一和通道二执行element-wise addition操作得到F3。
-论文中设置S为6。
+
+![anchor](image/anchor.jpg)
+
+anchor的步长S，较小时，效果较好，但是训练速度较慢，S较大时，训练速度快，但是性能有所下降，论文中设置S为6。
 除了设置步长，还设置base anchor size为256；anchor scales为1/16，1/8，1/4，1/2，1，2；anchor ratios 为1:1，1;2，1;3，1:4，1:5，1:6，1:7，1:8，1:9；
 
 
@@ -77,6 +80,10 @@ v*j代表坐标角度标注，vj代表预测的坐标角度参数；
 
 u*ij和uij分别代表二值标注和预测显著图的像素值。
 
+
+
+## Result
+![result](image/result.jpg)
 
 
 
