@@ -55,7 +55,7 @@ anchor的步长S，较小时，效果较好，但是训练速度较慢，S较大
 上面的分支是像素注意力网络，即空间注意力，特征图经过Inception模块之后得到W×H×2的两通道的显著图，显著图分别代表前景和背景的得分。经过Softmax之后，显著图像素值变为0到1之间，相当于空间分布权重，削弱噪声。经过softmax选出来一个通道与F3相乘，得到新的特征图A3。
 两通道的显著图由有监督的学习得到，通过标注，很容易得到二值图，作为显著图的标注，用二值图和显著图之间的交叉熵损失作为空间注意力损失。
 
-![map](image/map.jpg)
+![map](image/map.png)
 
 
 
@@ -63,7 +63,7 @@ anchor的步长S，较小时，效果较好，但是训练速度较慢，S较大
 
 边界框回归的定义的方法如下：
 
-![regress](image/regress.jpg)
+![regress](image/regress.png)
 
 Variables x, xa, and x* are for the predicted box, anchor box, and ground-truth box, respectively。θ∈[−π/2, 0)
 
@@ -72,7 +72,7 @@ Variables x, xa, and x* are for the predicted box, anchor box, and ground-truth 
 
 ## Loss Function
 
-![loss](image/loss.jpg)
+![loss](image/loss.png)
 
 函数fscale用于控制所预测的坐标偏移的动态变化（增加数值稳定性），使得预测结果更加准确。
 pi代表类别预测概率，li代表类别标注；
